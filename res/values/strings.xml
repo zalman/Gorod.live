@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gorod.Live</string>
+    <string name="count">Всего камер:</string>
+    <string name="main_title">Камеры по районам:</string>
+    <string name="district">район:</string>
+    <string name="no_data">Данные не загружены.</string>
+    <string name="all">Все</string>
+    <string name="logo_text">Город Live</string>
+    <string name="logo_desc">podryad.tv</string>
+    <string name="lens_desc">Город Live</string>
+    <string name="loading">Загрузка данных&#8230;</string>
+    <string name="image">Изображение</string>
+    <string name="menu_update">Обновить</string>
+    <string name="menu_preferences">Настройки</string>
+    <string name="menu_exit">Выход</string>
+    <string name="fav">В избранное</string>
+</resources>
