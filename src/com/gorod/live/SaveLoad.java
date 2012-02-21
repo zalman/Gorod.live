@@ -3,25 +3,30 @@ package com.gorod.live;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceActivity;
-import android.util.Log;
 
 public class SaveLoad extends PreferenceActivity{
+	public static final String PREFS_NAME = "FavPref";
 	SharedPreferences sPref;
 	public void saveText(String name,String value) {
 		try
 		{
-	    sPref = getPreferences(MODE_PRIVATE);
+		SharedPreferences sPref = getSharedPreferences(PREFS_NAME,0);
 	    Editor ed = sPref.edit();
-	    ed.putString(name,value);
+	    ed.putString("n","222");
 	    ed.commit();
 		}catch(Exception e){
-			Log.e("SAVEP",e.getMessage());
+			System.out.println("error while saving "  + e.toString());
 		}
 	  }
 	  
 	  public String loadText(String name) {
-	    sPref = getPreferences(MODE_PRIVATE);
-	    String savedText = sPref.getString("name","");
-	    return savedText;
+		String savedText = null;
+		try{
+	    sPref = getSharedPreferences(PREFS_NAME,0);
+	    savedText = sPref.getString("name","");
+		}catch(Exception e){
+			System.out.println("error while loading " + e.toString());
+		}
+		return savedText;
 	  }
 }

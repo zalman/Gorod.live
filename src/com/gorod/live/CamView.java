@@ -1,16 +1,19 @@
 package com.gorod.live;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,9 +23,13 @@ import android.widget.Toast;
 
 import com.pxr.tutorial.xmltest.R;
 
-public class CamView extends Activity {
+public class CamView extends Activity implements Serializable {
+	public static final String PREFS_NAME = "FavPref";
 	public String gtitle;
 	public int id_;
+	SharedPreferences prefs;
+	public String fav_pre = "fav";
+	public int[] fav_list;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,12 +58,20 @@ public class CamView extends Activity {
 			GetImage("http://contest.podryad.tv/json.php?GetImage&id=" + id_);
 			return true;
 		case 13337:
-			new SaveLoad().saveText("favs","1");
+			prefs = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
+		    Editor ed = prefs.edit();/*some somment*/
+		    System.out.println(Integer.toString(id_));
+		    ed.putString(fav_pre,Integer.toString(id_));
+		    ed.commit();
+		    Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+			
 			return true;
 
 		case R.id.menu_preferences:
-			//String st=new SaveLoad().loadText("favs");
-			//System.out.println(st.toString());
+			prefs = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
+			String value = prefs.getString(fav_pre, "no");
+			if(value!=null)
+			Toast.makeText(this, value, Toast.LENGTH_SHORT).show();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
