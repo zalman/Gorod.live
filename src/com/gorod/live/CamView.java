@@ -1,6 +1,7 @@
 package com.gorod.live;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,10 +24,10 @@ import android.widget.Toast;
 
 import com.pxr.tutorial.xmltest.R;
 
-public class CamView extends Activity implements Serializable {
+public class CamView extends Activity {
 	public static final String PREFS_NAME = "FavPref";
 	public String gtitle;
-	public int id_;
+	public String id_;
 	SharedPreferences prefs;
 	public String fav_pre = "fav";
 	public int[] fav_list;
@@ -36,7 +37,7 @@ public class CamView extends Activity implements Serializable {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.camview);
 		Bundle extras = getIntent().getExtras();
-		id_ = extras.getInt("id_");
+		id_ = extras.getString("id_");
 		gtitle = extras.getString("title_");
 		GetImage("http://contest.podryad.tv/json.php?GetImage&id=" + id_);
 
@@ -50,6 +51,7 @@ public class CamView extends Activity implements Serializable {
 		return true;
 	}
 
+	
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
@@ -58,20 +60,21 @@ public class CamView extends Activity implements Serializable {
 			GetImage("http://contest.podryad.tv/json.php?GetImage&id=" + id_);
 			return true;
 		case 13337:
-			prefs = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
-		    Editor ed = prefs.edit();/*some somment*/
-		    System.out.println(Integer.toString(id_));
-		    ed.putString(fav_pre,Integer.toString(id_));
+		    String sss[] = new Storage().explode("1,2,3");
+		    System.out.println(sss.toString());
+			/*prefs = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
+		    Editor ed = prefs.edit();
+		    ed.putStringSet(fav_pre,stringSet);
 		    ed.commit();
-		    Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
-			
+		    Toast.makeText(this, id_.toString() +"Saved", Toast.LENGTH_SHORT).show();
+			*/
 			return true;
 
 		case R.id.menu_preferences:
 			prefs = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
 			String value = prefs.getString(fav_pre, "no");
 			if(value!=null)
-			Toast.makeText(this, value, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this,value,Toast.LENGTH_SHORT).show();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

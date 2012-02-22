@@ -70,6 +70,7 @@ public class Cams extends ListActivity {
 
 				Intent i = new Intent(Cams.this, CamView.class);
 				i.putExtra("id_", o.get("id"));
+				System.out.println(o.get("id"));
 				i.putExtra("title_", o.get("title"));
 				startActivity(i);
 			}
@@ -135,55 +136,5 @@ public class Cams extends ListActivity {
 
 		}
 	}
-
-	/*
-	 * ArrayList<HashMap<String, String>> mylist = new ArrayList<HashMap<String,
-	 * String>>(); Bundle extras = getIntent().getExtras(); String id_ =
-	 * extras.getString("id_"); JSONObject json =
-	 * JSONfunctions.getJSONfromURL("http://contest.podryad.tv/json.php?GetList&id="
-	 * +id_);
-	 * 
-	 * try{
-	 * 
-	 * 
-	 * 
-	 * JSONArray cams = json.getJSONArray("CamsList");
-	 * 
-	 * String district=getResources().getString(R.string.district); String
-	 * district_ = extras.getString("district_"); final TextView tTemper =
-	 * (TextView) findViewById(R.id.main_title); tTemper.setTextSize(23);
-	 * 
-	 * if(Arrays.binarySearch(excludes,Integer.parseInt(id_))>-1)
-	 * tTemper.setText(district_.toString()); else
-	 * tTemper.setText(district_.toString()+" "+district.toString());
-	 * 
-	 * 
-	 * for(int i=0;i<cams.length();i++){ HashMap<String, String> map = new
-	 * HashMap<String, String>(); JSONObject cl = cams.getJSONObject(i);
-	 * 
-	 * map.put("id",cl.getString("id")); map.put("title",cl.getString("title"));
-	 * mylist.add(map); }
-	 * 
-	 * }catch(JSONException e){ Log.e("log_tag",
-	 * "Error parsing data "+e.toString()); }
-	 * 
-	 * ListAdapter adapter = new SimpleAdapter(this, mylist , R.layout.cams, new
-	 * String[] {"title"}, new int[] { R.id.item_title2 });
-	 * 
-	 * setListAdapter(adapter);
-	 * 
-	 * final ListView lv = getListView(); lv.setTextFilterEnabled(true);
-	 * lv.setOnItemClickListener(new OnItemClickListener() { public void
-	 * onItemClick(AdapterView<?> parent, View view, int position, long id) {
-	 * 
-	 * @SuppressWarnings("unchecked")
-	 * 
-	 * HashMap<String, String> o = (HashMap<String, String>)
-	 * lv.getItemAtPosition(position);
-	 * 
-	 * Intent i = new Intent(Cams.this,CamView.class);
-	 * i.putExtra("id_",o.get("id")); i.putExtra("title_",o.get("title"));
-	 * startActivity(i); } }); }
-	 */
 
 }
