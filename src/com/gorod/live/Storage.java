@@ -18,7 +18,7 @@ public class Storage {
 					System.out.println("NFE:"+nFE.toString());
 				}
 		} else {
-			if (s != "")
+			if (!s.equals(""))
 				al.add(Integer.parseInt(s));
 		}
 

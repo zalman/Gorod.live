@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,10 @@ import com.pxr.tutorial.xmltest.R;
 public class MySimpleArrayAdapter extends ArrayAdapter<HashMap<String, String>> {
 	private final Activity context;
 	private final ArrayList<HashMap<String, String>> names;
-	private String val;
+	public static final String PREFS_NAME = "FavPref";
+	public static String fav_pre = "fav";
+	public SharedPreferences prefs;
+	public String val;
 
 	static class ViewHolder {
 		public TextView text;
@@ -28,6 +32,8 @@ public class MySimpleArrayAdapter extends ArrayAdapter<HashMap<String, String>> 
 		super(context, R.layout.cams, names);
 		this.context = context;
 		this.names = names;
+		
+
 
 	}
 
@@ -46,8 +52,10 @@ public class MySimpleArrayAdapter extends ArrayAdapter<HashMap<String, String>> 
 		ViewHolder holder = (ViewHolder) rowView.getTag();
 		HashMap<String, String> s = names.get(position);
 		holder.text.setText(s.get("title"));
-		//if (Storage.checkin(s.get("ex"), Integer.parseInt(s.get("id"))))
-			//holder.image.setImageResource(android.R.drawable.btn_star_big_on);
+		val=Cams.val;
+
+		if (Storage.checkin(val, Integer.parseInt(s.get("id"))))
+			holder.image.setImageResource(android.R.drawable.btn_star_big_on);
 
 		return rowView;
 	}

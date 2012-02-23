@@ -10,10 +10,12 @@ import org.json.JSONObject;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,17 +30,11 @@ import com.pxr.tutorial.xmltest.R;
 public class Cams extends ListActivity {
 
 	public static int[] excludes = new int[] { 0, 6 };
+	public static final String PREFS_NAME = "FavPref";
 	public String jas;
 	public static String fav_pre = "fav";
 	public SharedPreferences prefs;
-	public String val;
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater menuInflater = getMenuInflater();
-		menuInflater.inflate(R.layout.menu, menu);
-		return true;
-	}
+	public static String val;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +42,6 @@ public class Cams extends ListActivity {
 		setContentView(R.layout.main);
 		final TextView tTemper = (TextView) findViewById(R.id.main_title);
 		final ListView lv = getListView();
-
 		Bundle extras = getIntent().getExtras();
 		String id_ = extras.getString("id_");
 		String district_ = extras.getString("district_");
@@ -54,9 +49,8 @@ public class Cams extends ListActivity {
 		jas = extras.getString("JSONArray");
 		GetCams(jas);
 
-		prefs = getSharedPreferences(fav_pre,MODE_PRIVATE);
+		prefs = getApplication().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 		val = prefs.getString(fav_pre, "");
-		System.out.println("trying to get val on Cams:"+val.toString());
 		String district = getResources().getString(R.string.district);
 
 		if (Arrays.binarySearch(excludes, Integer.parseInt(id_.toString())) > -1)
@@ -78,6 +72,13 @@ public class Cams extends ListActivity {
 				startActivity(i);
 			}
 		});
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater menuInflater = getMenuInflater();
+		menuInflater.inflate(R.layout.menu, menu);
+		return true;
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -122,10 +123,7 @@ public class Cams extends ListActivity {
 					map.put("title", cl.getString("title"));
 					mylist.add(map);
 				}
-				HashMap<String, String> map_ = new HashMap<String, String>();
-				map_.put("ex",val);
-				mylist.add(map_);
-					
+
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -136,8 +134,8 @@ public class Cams extends ListActivity {
 		protected void onPostExecute(Void unused) {
 			Dialog.dismiss();
 			
-			System.out.println("valb:"+val);
-			MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(Cams.this,mylist);
+			MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(Cams.this,
+					mylist);
 			setListAdapter(adapter);
 
 		}
