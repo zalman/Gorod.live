@@ -15,4 +15,7 @@
     <string name="menu_preferences">Настройки</string>
     <string name="menu_exit">Выход</string>
     <string name="fav">В избранное</string>
+    <string name="infav">В избранном</string>
+    <string name="saved">Сохранено</string>
+    <string name="deleted">Удалено</string>
 </resources>

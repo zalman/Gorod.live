@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,9 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.pxr.tutorial.xmltest.R;
@@ -30,6 +29,9 @@ public class Cams extends ListActivity {
 
 	public static int[] excludes = new int[] { 0, 6 };
 	public String jas;
+	public static String fav_pre = "fav";
+	public SharedPreferences prefs;
+	public String val;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -44,15 +46,17 @@ public class Cams extends ListActivity {
 		setContentView(R.layout.main);
 		final TextView tTemper = (TextView) findViewById(R.id.main_title);
 		final ListView lv = getListView();
-		
-		
+
 		Bundle extras = getIntent().getExtras();
 		String id_ = extras.getString("id_");
 		String district_ = extras.getString("district_");
-		
+
 		jas = extras.getString("JSONArray");
 		GetCams(jas);
 
+		prefs = getSharedPreferences(fav_pre,MODE_PRIVATE);
+		val = prefs.getString(fav_pre, "");
+		System.out.println("trying to get val on Cams:"+val.toString());
 		String district = getResources().getString(R.string.district);
 
 		if (Arrays.binarySearch(excludes, Integer.parseInt(id_.toString())) > -1)
@@ -60,17 +64,16 @@ public class Cams extends ListActivity {
 		else
 			tTemper.setText(district_.toString() + " " + district.toString());
 
-
 		lv.setTextFilterEnabled(true);
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				@SuppressWarnings("unchecked")
-				HashMap<String, String> o = (HashMap<String, String>) lv.getItemAtPosition(position);
+				HashMap<String, String> o = (HashMap<String, String>) lv
+						.getItemAtPosition(position);
 
 				Intent i = new Intent(Cams.this, CamView.class);
 				i.putExtra("id_", o.get("id"));
-				System.out.println(o.get("id"));
 				i.putExtra("title_", o.get("title"));
 				startActivity(i);
 			}
@@ -85,21 +88,20 @@ public class Cams extends ListActivity {
 			GetCams(jas);
 			return true;
 
-		case R.id.menu_preferences:		
+		case R.id.menu_preferences:
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	public void GetCams(String str) {
 		new GetCams().execute(str);
 	}
 
-	private class GetCams extends AsyncTask<String, Void, Void> {
+	public class GetCams extends AsyncTask<String, Void, Void> {
 		private ProgressDialog Dialog = new ProgressDialog(Cams.this);
 		public ArrayList<HashMap<String, String>> mylist = new ArrayList<HashMap<String, String>>();
-		ListAdapter adapter;
 
 		protected void onPreExecute() {
 			Dialog.setMessage(getResources().getString(R.string.loading));
@@ -120,6 +122,10 @@ public class Cams extends ListActivity {
 					map.put("title", cl.getString("title"));
 					mylist.add(map);
 				}
+				HashMap<String, String> map_ = new HashMap<String, String>();
+				map_.put("ex",val);
+				mylist.add(map_);
+					
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -129,9 +135,9 @@ public class Cams extends ListActivity {
 
 		protected void onPostExecute(Void unused) {
 			Dialog.dismiss();
-			adapter = new SimpleAdapter(Cams.this, mylist, R.layout.cams,
-					new String[] { "title" }, new int[] { R.id.item_title2 });
-
+			
+			System.out.println("valb:"+val);
+			MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(Cams.this,mylist);
 			setListAdapter(adapter);
 
 		}
