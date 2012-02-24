@@ -50,7 +50,7 @@ public class CamView extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater menuInflater = getMenuInflater();
-		if(Storage.checkin(val, id))
+		if (Storage.checkin(val, id))
 			menu.add(0, 13337, 2, getResources().getString(R.string.infav))
 					.setIcon(android.R.drawable.btn_star_big_on);
 		else
@@ -95,17 +95,22 @@ public class CamView extends Activity {
 
 			return true;
 
-		case R.id.menu_preferences:
+		/*case R.id.menu_preferences:
 			if (val != "")
 				Toast.makeText(this, val, Toast.LENGTH_SHORT).show();
-			return true;
+			return true;*/
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
 	public void GetImage(String url) {
-		new GetImage().execute(url);
+		if (Utils.isNetworkAvailable(this.getApplicationContext()))
+			new GetImage().execute(url);
+		else
+			Toast.makeText(this,
+					getResources().getString(R.string.no_internet),
+					Toast.LENGTH_SHORT).show();
 	}
 
 	private class GetImage extends AsyncTask<String, Void, Void> {

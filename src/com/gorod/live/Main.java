@@ -23,11 +23,13 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pxr.tutorial.xmltest.R;
 
 public class Main extends ListActivity {
 	public JSONArray CamsList;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,7 +41,8 @@ public class Main extends ListActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				@SuppressWarnings("unchecked")
-				HashMap<String, String> o = (HashMap<String, String>) lv.getItemAtPosition(position);
+				HashMap<String, String> o = (HashMap<String, String>) lv
+						.getItemAtPosition(position);
 
 				Intent i = new Intent(Main.this, Cams.class);
 				i.putExtra("id_", o.get("id"));
@@ -65,15 +68,21 @@ public class Main extends ListActivity {
 			GetData("http://contest.podryad.tv/json.php?GetList");
 			return true;
 
-		case R.id.menu_preferences:
+		/*case R.id.menu_preferences:
 			return true;
+		*/
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
 	public void GetData(String url) {
-		new GetData().execute(url);
+		if (Utils.isNetworkAvailable(this))
+			new GetData().execute(url);
+		else
+			Toast.makeText(this,
+					getResources().getString(R.string.no_internet),
+					Toast.LENGTH_SHORT).show();
 	}
 
 	private class GetData extends AsyncTask<String, Void, Void> {

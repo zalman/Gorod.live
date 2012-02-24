@@ -10,12 +10,10 @@ import org.json.JSONObject;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -49,8 +47,6 @@ public class Cams extends ListActivity {
 		jas = extras.getString("JSONArray");
 		GetCams(jas);
 
-		prefs = getApplication().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-		val = prefs.getString(fav_pre, "");
 		String district = getResources().getString(R.string.district);
 
 		if (Arrays.binarySearch(excludes, Integer.parseInt(id_.toString())) > -1)
@@ -89,15 +85,16 @@ public class Cams extends ListActivity {
 			GetCams(jas);
 			return true;
 
-		case R.id.menu_preferences:
+		/*case R.id.menu_preferences:
 			return true;
+		*/
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
 	public void GetCams(String str) {
-		new GetCams().execute(str);
+			new GetCams().execute(str);
 	}
 
 	public class GetCams extends AsyncTask<String, Void, Void> {
@@ -133,7 +130,8 @@ public class Cams extends ListActivity {
 
 		protected void onPostExecute(Void unused) {
 			Dialog.dismiss();
-			
+			prefs = getApplication().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+			val = prefs.getString(fav_pre, "");
 			MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(Cams.this,
 					mylist);
 			setListAdapter(adapter);

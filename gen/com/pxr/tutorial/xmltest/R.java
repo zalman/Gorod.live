@@ -24,7 +24,6 @@ public final class R {
         public static final int lens=0x7f050005;
         public static final int logo_text=0x7f050006;
         public static final int main_title=0x7f05000a;
-        public static final int menu_preferences=0x7f05000c;
         public static final int menu_update=0x7f05000b;
         public static final int notice=0x7f050007;
         public static final int tableRow1=0x7f050004;
@@ -56,6 +55,7 @@ public final class R {
         public static final int menu_preferences=0x7f04000c;
         public static final int menu_update=0x7f04000b;
         public static final int no_data=0x7f040004;
+        public static final int no_internet=0x7f040012;
         public static final int saved=0x7f040010;
     }
 }

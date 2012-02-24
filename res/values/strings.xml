@@ -18,4 +18,5 @@
     <string name="infav">В избранном</string>
     <string name="saved">Сохранено</string>
     <string name="deleted">Удалено</string>
+    <string name="no_internet">Невозможно установить соединение, проверьте ваше подключение.</string>
 </resources>
