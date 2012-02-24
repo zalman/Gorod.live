@@ -23,13 +23,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.pxr.tutorial.xmltest.R;
+import com.gorod.live.R;
 
 public class Cams extends ListActivity {
 
 	public static int[] excludes = new int[] { 0, 6 };
 	public static final String PREFS_NAME = "FavPref";
 	public String jas;
+	public String id_;
 	public static String fav_pre = "fav";
 	public SharedPreferences prefs;
 	public static String val;
@@ -41,7 +42,7 @@ public class Cams extends ListActivity {
 		final TextView tTemper = (TextView) findViewById(R.id.main_title);
 		final ListView lv = getListView();
 		Bundle extras = getIntent().getExtras();
-		String id_ = extras.getString("id_");
+		id_ = extras.getString("id_");
 		String district_ = extras.getString("district_");
 
 		jas = extras.getString("JSONArray");
@@ -85,21 +86,22 @@ public class Cams extends ListActivity {
 			GetCams(jas);
 			return true;
 
-		/*case R.id.menu_preferences:
-			return true;
-		*/
+			/*
+			 * case R.id.menu_preferences: return true;
+			 */
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
 	public void GetCams(String str) {
-			new GetCams().execute(str);
+		new GetCams().execute(str);
 	}
 
 	public class GetCams extends AsyncTask<String, Void, Void> {
 		private ProgressDialog Dialog = new ProgressDialog(Cams.this);
 		public ArrayList<HashMap<String, String>> mylist = new ArrayList<HashMap<String, String>>();
+		public ArrayList<HashMap<String, String>> finallist = new ArrayList<HashMap<String, String>>();
 
 		protected void onPreExecute() {
 			Dialog.setMessage(getResources().getString(R.string.loading));
@@ -118,9 +120,22 @@ public class Cams extends ListActivity {
 
 					map.put("id", cl.getString("id"));
 					map.put("title", cl.getString("title"));
+					map.put("district", cl.getString("district"));
 					mylist.add(map);
 				}
-
+				// ////////////
+				if (!id_.equals("0")) {
+					
+					for (int i = 0; i < mylist.size(); i++) {
+						HashMap<String,String> el = mylist.get(i);
+						HashMap<String,String> hm = new HashMap<String, String>();
+						hm.put("id",el.get("id"));
+						hm.put("title", el.get("title"));
+						if(el.get("district").equals(id_))
+							finallist.add(hm);
+					}
+				}else finallist=(ArrayList<HashMap<String, String>>) mylist.clone();
+				// ///////////
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -130,10 +145,11 @@ public class Cams extends ListActivity {
 
 		protected void onPostExecute(Void unused) {
 			Dialog.dismiss();
-			prefs = getApplication().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+			prefs = getApplication().getSharedPreferences(PREFS_NAME,
+					MODE_PRIVATE);
 			val = prefs.getString(fav_pre, "");
 			MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(Cams.this,
-					mylist);
+					finallist);
 			setListAdapter(adapter);
 
 		}

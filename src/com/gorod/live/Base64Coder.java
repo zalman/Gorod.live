@@ -1,42 +1,5 @@
 package com.gorod.live;
 
-//Copyright 2003-2009 Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland
-//www.source-code.biz, www.inventec.ch/chdh
-//
-//This module is multi-licensed and may be used under the terms
-//of any of the following licenses:
-//
-//EPL, Eclipse Public License, http://www.eclipse.org/legal
-//LGPL, GNU Lesser General Public License, http://www.gnu.org/licenses/lgpl.html
-//AL, Apache License, http://www.apache.org/licenses
-//BSD, BSD License, http://www.opensource.org/licenses/bsd-license.php
-//
-//Please contact the author if you need another license.
-//This module is provided "as is", without warranties of any kind.
-
-/**
-* A Base64 Encoder/Decoder.
-* 
-* <p>
-* This class is used to encode and decode data in Base64 format as described in RFC 1521.
-* 
-* <p>
-* Home page: <a href="http://www.source-code.biz">www.source-code.biz</a><br>
-* Author: Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland<br>
-* Multi-licensed: EPL/LGPL/AL/BSD.
-* 
-* <p>
-* Version history:<br>
-* 2003-07-22 Christian d'Heureuse (chdh): Module created.<br>
-* 2005-08-11 chdh: Lincense changed from GPL to LGPL.<br>
-* 2006-11-21 chdh:<br>
-* &nbsp; Method encode(String) renamed to encodeString(String).<br>
-* &nbsp; Method decode(String) renamed to decodeString(String).<br>
-* &nbsp; New method encode(byte[],int) added.<br>
-* &nbsp; New method decode(String) added.<br>
-* 2009-07-16: Additional licenses (EPL/AL) added.<br>
-* 2009-09-16: Additional license (BSD) added.<br>
-*/
 public class Base64Coder {
 
 //Mapping table from 6-bit nibbles to Base64 characters.

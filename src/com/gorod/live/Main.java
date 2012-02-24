@@ -25,7 +25,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.pxr.tutorial.xmltest.R;
+import com.gorod.live.R;
 
 public class Main extends ListActivity {
 	public JSONArray CamsList;

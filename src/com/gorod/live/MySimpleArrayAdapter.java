@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.pxr.tutorial.xmltest.R;
+import com.gorod.live.R;
 
 public class MySimpleArrayAdapter extends ArrayAdapter<HashMap<String, String>> {
 	private final Activity context;

@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.pxr.tutorial.xmltest.R;
+import com.gorod.live.R;
 
 public class CamView extends Activity {
 	public static final String PREFS_NAME = "FavPref";
@@ -37,7 +37,7 @@ public class CamView extends Activity {
 		Bundle extras = getIntent().getExtras();
 		String id_ = extras.getString("id_");
 		id = Integer.parseInt(id_);
-		gtitle = extras.getString("title_") + id;
+		gtitle = extras.getString("title_");
 		//
 		prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 		val = prefs.getString(fav_pre, "");

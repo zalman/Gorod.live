@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Gorod.Live</string>
+    <string name="app_name">Город Live</string>
     <string name="count">Всего камер:</string>
     <string name="main_title">Камеры по районам:</string>
     <string name="district">район:</string>
