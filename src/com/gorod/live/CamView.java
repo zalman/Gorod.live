@@ -29,6 +29,7 @@ public class CamView extends Activity {
 	public SharedPreferences prefs;
 	public String val;
 	public boolean isChangedStat;
+	public static final String URL="http://live.podryad.tv/camws/android.php?GetImage&id=";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -42,8 +43,7 @@ public class CamView extends Activity {
 		prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 		val = prefs.getString(fav_pre, "");
 		//
-		GetImage("http://contest.podryad.tv/json.php?GetImage&id="
-				+ id.toString());
+		GetImage(URL+id.toString());
 
 	}
 
@@ -75,8 +75,7 @@ public class CamView extends Activity {
 		switch (item.getItemId()) {
 
 		case R.id.menu_update:
-			GetImage("http://contest.podryad.tv/json.php?GetImage&id="
-					+ id.toString());
+			GetImage(URL+id.toString());
 			return true;
 		case 13337:
 			if (Storage.checkin(val, id)) {

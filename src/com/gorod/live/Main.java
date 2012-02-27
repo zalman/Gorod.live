@@ -29,12 +29,13 @@ import com.gorod.live.R;
 
 public class Main extends ListActivity {
 	public JSONArray CamsList;
+	public static final String URL="http://live.podryad.tv/camws/android.php?GetList";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		GetData("http://contest.podryad.tv/json.php?GetList");
+		GetData(URL);
 		final ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 		lv.setOnItemClickListener(new OnItemClickListener() {
@@ -65,7 +66,7 @@ public class Main extends ListActivity {
 		switch (item.getItemId()) {
 
 		case R.id.menu_update:
-			GetData("http://contest.podryad.tv/json.php?GetList");
+			GetData(URL);
 			return true;
 
 		/*case R.id.menu_preferences:
