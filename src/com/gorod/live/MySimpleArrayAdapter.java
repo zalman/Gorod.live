@@ -32,8 +32,8 @@ public class MySimpleArrayAdapter extends ArrayAdapter<HashMap<String, String>> 
 		super(context, R.layout.cams, names);
 		this.context = context;
 		this.names = names;
-		
-
+		this.val = Cams.val;
+		System.out.println(val);
 
 	}
 
@@ -52,10 +52,11 @@ public class MySimpleArrayAdapter extends ArrayAdapter<HashMap<String, String>> 
 		ViewHolder holder = (ViewHolder) rowView.getTag();
 		HashMap<String, String> s = names.get(position);
 		holder.text.setText(s.get("title"));
-		val=Cams.val;
-
 		if (Storage.checkin(val, Integer.parseInt(s.get("id"))))
 			holder.image.setImageResource(android.R.drawable.btn_star_big_on);
+
+		else
+			holder.image.setImageResource(0);
 
 		return rowView;
 	}

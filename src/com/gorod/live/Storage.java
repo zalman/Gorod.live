@@ -12,10 +12,10 @@ public class Storage {
 			String[] a = s.split(",");
 
 			for (int i = 0; i < a.length; i++)
-				try{
-				al.add(Integer.parseInt(a[i]));
-				}catch(NumberFormatException nFE) { 
-					System.out.println("NFE:"+nFE.toString());
+				try {
+					al.add(Integer.parseInt(a[i]));
+				} catch (NumberFormatException nFE) {
+					System.out.println("NFE:" + nFE.toString());
 				}
 		} else {
 			if (!s.equals(""))
@@ -34,7 +34,7 @@ public class Storage {
 				sb.append(SEP);
 
 		}
-		//System.out.println("after implode:" + sb.toString());
+		// System.out.println("after implode:" + sb.toString());
 		return sb.toString();
 	}
 
@@ -54,9 +54,10 @@ public class Storage {
 
 	public static boolean checkin(String s, Integer el) {
 		ArrayList<Integer> al = explode(s);
-		if (al.contains(el))
+		if (al.contains(el)) {
+			//System.out.println(al.toString()+" contains "+Integer.toString(el));
 			return true;
-		else
+		} else
 			return false;
 	}
 
